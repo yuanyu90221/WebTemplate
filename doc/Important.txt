@@ -1,0 +1,1 @@
+用 mybatis generator 產生出來的 mapper, 上面都要手動加上 @Mapper

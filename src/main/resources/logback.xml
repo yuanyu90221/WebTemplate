@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_HOME" value="D:/TommyLog" />
+	<property name="CHARSET" value="UTF-8" />
+	<property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread][%-5level][%logger{50}] %m%n" />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>${PATTERN}</Pattern>
+			<charset>${CHARSET}</charset>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>TRACE</level>
+		</filter>
+	</appender>
+
+	<appender name="DAILY_ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_HOME}/TestSpringBootMyBatis.log</File>
+		<encoder>
+			<Pattern>${PATTERN}</Pattern>
+			<charset>${CHARSET}</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<FileNamePattern>${LOG_HOME}/TestSpringBootMyBatis.%d{yyyy-MM-dd}.log</FileNamePattern>
+
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+<!-- 	<appender name="minuteRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender"> -->
+<!-- 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> -->
+			<!-- rollover every minute -->
+<!-- 			<FileNamePattern>${LOG_HOME}/minutes/TestSpringBootMyBatis.%d{yyyy-MM-dd_HH-mm}.log</FileNamePattern> -->
+
+			<!-- keep 30 minutes' worth of history -->
+<!-- 			<maxHistory>30</maxHistory> -->
+<!-- 		</rollingPolicy> -->
+
+<!-- 		<encoder> -->
+<!-- 			<Pattern>${PATTERN}</Pattern> -->
+<!-- 		</encoder> -->
+<!-- 	</appender> -->
+
+	<logger name="com.exfantasy" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="DAILY_ROLLING_FILE" />
+<!-- 		<appender-ref ref="minuteRollingFileAppender" /> -->
+	</logger>
+
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="DAILY_ROLLING_FILE" />
+	</root>
+</configuration>
