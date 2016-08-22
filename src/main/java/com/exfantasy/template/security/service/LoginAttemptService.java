@@ -24,6 +24,11 @@ public class LoginAttemptService {
 	
     private LoadingCache<String, Integer> blockList;
 
+    /**
+     * http://geekabyte.blogspot.tw/2014/06/how-to-autowire-bean-with-constructor.html
+     * 
+     * @param customConfig
+     */
     @Autowired
 	public LoginAttemptService(CustomConfig customConfig) {
     	this.customConfig = customConfig;
