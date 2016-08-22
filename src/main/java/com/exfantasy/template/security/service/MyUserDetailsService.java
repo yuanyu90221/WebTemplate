@@ -20,10 +20,10 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Autowired
 	private UserService userService;
 
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		User user;
 		try {
-			user = userService.queryUserByEmail(userName);
+			user = userService.queryUserByEmail(email);
 		} catch (Exception e) {
 			throw new UsernameNotFoundException("user select fail");
 		}
