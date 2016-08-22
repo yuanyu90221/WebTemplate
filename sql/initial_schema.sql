@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` int(10) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL UNIQUE,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `enabled` char(1) NOT NULL,
   `create_time` date NOT NULL,
   `last_signin_time` datetime DEFAULT NULL,

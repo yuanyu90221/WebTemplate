@@ -20,6 +20,7 @@ import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.mybatis.model.UserExample;
 import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.mybatis.model.UserRoleExample;
+import com.exfantasy.template.security.password.Password;
 import com.exfantasy.template.util.EncryptUtil;
 import com.exfantasy.template.vo.request.LoginVo;
 import com.exfantasy.template.vo.request.RegisterVo;
@@ -49,7 +50,7 @@ public class UserService {
     public void register(RegisterVo registerVo) {
     	User user = new User();
     	user.setEmail(registerVo.getEmail());
-    	user.setPassword(EncryptUtil.encrypt(registerVo.getPassword()));
+    	user.setPassword(Password.encrypt(registerVo.getPassword()));
     	user.setEnabled(true);
     	user.setCreateTime(new Date(System.currentTimeMillis()));
         userMapper.insert(user);
