@@ -19,6 +19,7 @@ import com.exfantasy.template.mybatis.mapper.UserRoleMapper;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.mybatis.model.UserExample;
 import com.exfantasy.template.mybatis.model.UserRole;
+import com.exfantasy.template.mybatis.model.UserRoleExample;
 import com.exfantasy.template.util.EncryptUtil;
 import com.exfantasy.template.vo.request.LoginVo;
 import com.exfantasy.template.vo.request.RegisterVo;
@@ -82,6 +83,13 @@ public class UserService {
 		example.createCriteria().andEmailEqualTo(email);
 		List<User> user = userMapper.selectByExample(example);
 		return user.isEmpty() ? null : user.get(0);
+	}
+	
+	public List<UserRole> queryUserRoles(User user) {
+		UserRoleExample example = new UserRoleExample();
+		example.createCriteria().andUserIdEqualTo(user.getUserId());
+		List<UserRole> roles = userRoleMapper.selectByExample(example);
+		return roles.isEmpty() ? null : roles;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
