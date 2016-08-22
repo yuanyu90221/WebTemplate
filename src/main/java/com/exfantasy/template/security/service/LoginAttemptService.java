@@ -20,21 +20,16 @@ import com.google.common.cache.LoadingCache;
 @Service
 public class LoginAttemptService {
 
-	@Autowired
     private CustomConfig customConfig;
 	
-	// FIXME 這樣寫 customConfig 會是 null, 再看怎麼解
-//	private final int loginMaxAttempt = customConfig.getLoginMaxAttempt();
-//	private final int blockTimeMins = customConfig.getBlockTimeMins();
-    
-    private final int loginMaxAttempt = 3;
-    private final int blockTimeMins = 5;
-
     private LoadingCache<String, Integer> blockList;
 
-	public LoginAttemptService() {
+    @Autowired
+	public LoginAttemptService(CustomConfig customConfig) {
+    	this.customConfig = customConfig;
+    	
 		blockList 
-			= CacheBuilder.newBuilder().expireAfterWrite(blockTimeMins, TimeUnit.MINUTES)
+			= CacheBuilder.newBuilder().expireAfterWrite(customConfig.getBlockTimeMins(), TimeUnit.MINUTES)
 				.build(new CacheLoader<String, Integer>() {
 					public Integer load(String key) {
 						return 0;
@@ -59,7 +54,7 @@ public class LoginAttemptService {
 
     public boolean isBlocked(String key) {
         try {
-            return blockList.get(key) > loginMaxAttempt;
+            return blockList.get(key) > customConfig.getLoginMaxAttempt();
         } catch (ExecutionException e) {
             return false;
         }
