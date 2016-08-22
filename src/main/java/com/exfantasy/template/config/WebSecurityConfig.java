@@ -12,6 +12,12 @@ import com.exfantasy.template.security.authentication.MyAuthenticationFailureHan
 import com.exfantasy.template.security.authentication.MyAuthenticationProvider;
 import com.exfantasy.template.security.service.MyUserDetailsService;
 
+/**
+ * Ref. https://spring.io/guides/gs/securing-web/
+ * 
+ * @author tommy.feng
+ *
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

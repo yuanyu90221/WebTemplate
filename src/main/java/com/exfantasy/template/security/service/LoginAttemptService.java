@@ -1,10 +1,8 @@
 package com.exfantasy.template.security.service;
+
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.common.cache.CacheBuilder;
@@ -12,25 +10,27 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
 /**
- * Created by mac on 2016/6/20.
+ * Ref. http://genchilu-blog.logdown.com/posts/745182
+ * 
+ * @author tommy.feng
+ *
  */
 @Service
 public class LoginAttemptService {
 
-    @Autowired
-    private HttpServletRequest request;
     private final int MAX_ATTEMPT = 2;
-    private final int bolckTimeMins = 1;
+    private final int blockTimeMins = 1;
     private LoadingCache<String, Integer> blockList;
 
-    public LoginAttemptService() {
-        blockList = CacheBuilder.newBuilder().
-                expireAfterWrite(bolckTimeMins, TimeUnit.MINUTES).build(new CacheLoader<String, Integer>() {
-            public Integer load(String key) {
-                return 0;
-            }
-        });
-    }
+	public LoginAttemptService() {
+		blockList 
+			= CacheBuilder.newBuilder().expireAfterWrite(blockTimeMins, TimeUnit.MINUTES)
+				.build(new CacheLoader<String, Integer>() {
+					public Integer load(String key) {
+						return 0;
+					}
+				});
+	}
 
     public void loginSucceeded(String key) {
         blockList.invalidate(key);
