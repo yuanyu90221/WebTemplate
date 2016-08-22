@@ -17,7 +17,6 @@ import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.user.UserService;
 import com.exfantasy.template.util.ErrorMsgUtil;
-import com.exfantasy.template.vo.request.LoginVo;
 import com.exfantasy.template.vo.request.QueryVo;
 import com.exfantasy.template.vo.request.RegisterVo;
 import com.exfantasy.template.vo.response.ResponseVo;
@@ -46,16 +45,6 @@ public class UserController {
 		}
 		userService.register(registerVo);
 		return new ResponseVo(ResultCode.SUCCESS, "Register succeed");
-	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseVo login(@Validated @RequestBody final LoginVo loginVo, BindingResult result) {
-		if (result.hasErrors()) {
-			String errorMsg = ErrorMsgUtil.getErrorMsgs(result);
-			throw new OperationException(ResultCode.INVALID_FORMAT, errorMsg);
-		}
-		userService.login(loginVo);
-		return new ResponseVo(ResultCode.SUCCESS, "Login succeed");
 	}
 	
 	@RequestMapping(value = "/get_by_userid/{userId}", method = RequestMethod.GET)

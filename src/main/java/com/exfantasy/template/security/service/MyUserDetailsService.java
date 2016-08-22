@@ -21,22 +21,14 @@ public class MyUserDetailsService implements UserDetailsService {
 	private UserService userService;
 
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		User user;
-		try {
-			user = userService.queryUserByEmail(email);
-		} catch (Exception e) {
-			throw new UsernameNotFoundException("user select fail");
-		}
+		User user = userService.queryUserByEmail(email);
 		if (user == null) {
-			throw new UsernameNotFoundException("no user found");
-		} else {
-			try {
-				List<UserRole> roles = userService.queryUserRoles(user);
-				List<GrantedAuthority> gas = createRoles(roles);
-				return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, gas);
-			} catch (Exception e) {
-				throw new UsernameNotFoundException("user role select fail");
-			}
+			throw new UsernameNotFoundException("Cannot find user");
+		} 
+		else {
+			List<UserRole> roles = userService.queryUserRoles(user);
+			List<GrantedAuthority> gas = createRoles(roles);
+			return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, gas);
 		}
 	}
 	
