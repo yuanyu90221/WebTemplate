@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.exfantasy.template.config.AdminConfig;
+import com.exfantasy.template.config.CustomConfig;
 import com.exfantasy.template.constant.Role;
 import com.exfantasy.template.mybatis.mapper.UserMapper;
 import com.exfantasy.template.mybatis.mapper.UserRoleMapper;
@@ -33,13 +33,13 @@ public class UserService {
     private UserRoleMapper userRoleMapper;
     
     @Autowired
-    private AdminConfig adminConfig;
+    private CustomConfig customConfig;
 
-//    private final AdminConfig adminConfig;
+//    private final CommonConfig adminConfig;
 //
 //    @Autowired
-//    public UserService(AdminConfig adminConfig) {
-//        this.adminConfig = adminConfig;
+//    public UserService(CommonConfig commonConfig) {
+//        this.commonConfig = commonConfig;
 //    }
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
@@ -84,7 +84,7 @@ public class UserService {
     }
     
     private boolean isAdminEmail(String email) {
-		List<String> admins = adminConfig.getAdmins();
+		List<String> admins = customConfig.getAdmins();
 		return admins.contains(email);
 	}
 }

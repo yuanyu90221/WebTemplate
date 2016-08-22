@@ -14,3 +14,7 @@ custom:
     admins:
         - tommy.yeh1112@gmail.com
         - alicechen1013@gmail.com
+
+    loginMaxAttempt: 3
+    
+    blockTimeMins: 5

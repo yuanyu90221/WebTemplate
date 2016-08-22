@@ -3,8 +3,10 @@ package com.exfantasy.template.security.service;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exfantasy.template.config.CustomConfig;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -18,8 +20,16 @@ import com.google.common.cache.LoadingCache;
 @Service
 public class LoginAttemptService {
 
-    private final int MAX_ATTEMPT = 2;
-    private final int blockTimeMins = 1;
+	@Autowired
+    private CustomConfig customConfig;
+	
+	// FIXME 這樣寫 customConfig 會是 null, 再看怎麼解
+//	private final int loginMaxAttempt = customConfig.getLoginMaxAttempt();
+//	private final int blockTimeMins = customConfig.getBlockTimeMins();
+    
+    private final int loginMaxAttempt = 3;
+    private final int blockTimeMins = 5;
+
     private LoadingCache<String, Integer> blockList;
 
 	public LoginAttemptService() {
@@ -49,7 +59,7 @@ public class LoginAttemptService {
 
     public boolean isBlocked(String key) {
         try {
-            return blockList.get(key) >= MAX_ATTEMPT;
+            return blockList.get(key) > loginMaxAttempt;
         } catch (ExecutionException e) {
             return false;
         }
