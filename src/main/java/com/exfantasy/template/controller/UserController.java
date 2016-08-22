@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,11 +44,6 @@ public class UserController {
 		}
 		userService.register(registerVo);
 		return new ResponseVo(ResultCode.SUCCESS, "Register succeed");
-	}
-	
-	@RequestMapping(value = "/get_by_userid/{userId}", method = RequestMethod.GET)
-	public @ResponseBody User queryUserByUserId(@PathVariable("userId") Integer userId) {
-		return userService.queryUserByUserId(userId);
 	}
 	
 	@RequestMapping(value = "/get_by_email", method = RequestMethod.POST)

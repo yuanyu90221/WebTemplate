@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.exfantasy.template.config.AdminConfig;
-import com.exfantasy.template.constant.ResultCode;
 import com.exfantasy.template.constant.Role;
-import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.mapper.UserMapper;
 import com.exfantasy.template.mybatis.mapper.UserRoleMapper;
 import com.exfantasy.template.mybatis.model.User;
@@ -21,8 +19,6 @@ import com.exfantasy.template.mybatis.model.UserExample;
 import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.mybatis.model.UserRoleExample;
 import com.exfantasy.template.security.password.Password;
-import com.exfantasy.template.util.EncryptUtil;
-import com.exfantasy.template.vo.request.LoginVo;
 import com.exfantasy.template.vo.request.RegisterVo;
 
 @Service
@@ -59,26 +55,10 @@ public class UserService {
         userRole.setUserId(user.getUserId());
         userRole.setRole(isAdminEmail(registerVo.getEmail()) ? Role.ADMIN.getRoleStr() : Role.USER.getRoleStr());
 		userRoleMapper.insert(userRole);
+		
+		logger.info("User register with email: <{}> succeed", registerVo.getEmail());
     }
     
-	public void login(LoginVo loginVo) {
-		User user = queryUserByEmail(loginVo.getEmail());
-		if (user == null) {
-			throw new OperationException(ResultCode.CANNOT_FIND_USER);
-		}
-		String inputPwd = EncryptUtil.encrypt(loginVo.getPassword());
-		String pwd = user.getPassword();
-		if (!inputPwd.equals(pwd)) {
-			throw new OperationException(ResultCode.INCORRECT_PASSWORD);
-		}
-		
-		logger.info("{} login succeed", loginVo.getEmail());
-	}
-
-	public User queryUserByUserId(Integer userId) {
-		return userMapper.selectByPrimaryKey(userId);
-	}
-	
 	public User queryUserByEmail(String email) {
 		UserExample example = new UserExample();
 		example.createCriteria().andEmailEqualTo(email);
