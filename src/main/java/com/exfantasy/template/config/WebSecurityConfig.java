@@ -35,9 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
         	.authorizeRequests()
-            	.antMatchers("/", "/home", "/css/**").permitAll()
+            	.antMatchers("/", "/home").permitAll()
+            	.antMatchers("/css/**", "/images/**", "/js/**").permitAll() // 讓這些 static content 可以被讀取
             	.antMatchers("/user/register").permitAll() // for api do register
-            	.anyRequest().authenticated() // 除了上面兩組, 輸入任何 request 都會先被導到 login
+            	.anyRequest().authenticated() // 除了上面, 輸入任何如果沒有登入, 都會先被導到 login
             	.and()
             .formLogin()
             	.loginPage("/login").permitAll()

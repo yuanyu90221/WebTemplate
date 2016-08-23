@@ -6,7 +6,9 @@ html, body {
 }
 
 body {
-  background: tomato;
+  /* background: tomato; */
+  /* background: url(/images/Ace.jpg) no-repeat; */
+  background: url(/images/Ace.jpg);
   display: flex;
   justify-content: center;
   align-items: center;
