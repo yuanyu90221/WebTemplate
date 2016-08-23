@@ -39,12 +39,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             	.anyRequest().authenticated()
             	.and()
             .formLogin()
-            	.loginPage("/login")
-            	.permitAll()
+            	.loginPage("/login").permitAll()
             	.failureHandler(myAuthenticationFailureHandler)
             	.and()
-            .logout()
-            	.permitAll()
+            .logout().permitAll()
             	.and()
             .csrf().disable();
     }
