@@ -3,7 +3,10 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <title>Spring Security Example </title>
+<!--         <link rel="stylesheet" href="https://dl.dropboxusercontent.com/u/3320857/testcss/style.css" /> -->
+        <link rel="stylesheet" href="css/style.css" />
     </head>
+
     <body>
         <div th:if="${param.error}">
             Invalid email and password.
@@ -12,9 +15,15 @@
             You have been logged out.
         </div>
         <form th:action="@{/login}" method="post">
-            <div><label> Email : <input type="text" name="username"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Sign In"/></div>
+        	<header>Login</header>
+            <label>Email <span>*</span></label>
+            <input type="text" name="username"/>
+            <div class="help">At least 6 character</div>
+            <label>Password <span>*</span></label>
+            <input type="password" name="password"/>
+            <div class="help">Use upper and lowercase lettes as well</div>
+            <!-- <input type="submit" value="Sign In"/> -->
+            <button type="submit">Login</button>
         </form>
     </body>
 </html>

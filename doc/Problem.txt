@@ -1,0 +1,4 @@
+因為現在有 Spring Security 機制, 所以 login.html 的 css 要登入才取得到!?!?!?
+
+目前解法: 
+	在 WebSecurityConfig 加上 .antMatchers("/", "/home", "/css", "/user/register").permitAll()
