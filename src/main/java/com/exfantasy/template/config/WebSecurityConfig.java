@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.authorizeRequests()
             	.antMatchers("/", "/home", "/css/**").permitAll()
             	.antMatchers("/user/register").permitAll() // for api do register
-            	.anyRequest().authenticated()
+            	.anyRequest().authenticated() // 除了上面兩組, 輸入任何 request 都會先被導到 login
             	.and()
             .formLogin()
             	.loginPage("/login").permitAll()
